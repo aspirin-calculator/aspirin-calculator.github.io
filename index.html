@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Аспирин | Справочник и калькулятор</title>
+    <title>Аспирин | Мультидисциплинарный справочник</title>
     <style>
         :root {
             --bg-color: #0f172a;          /* Глубокий тёмно-синий/серый фон */
@@ -12,8 +12,8 @@
             --border-color: #334155;      /* Сдержанные границы элементов */
             --primary-color: #f1f5f9;     /* Основной светлый текст */
             --secondary-color: #94a3b8;   /* Приглушённый текст для справок */
-            --accent-blue: #38bdf8;       /* Мягкий голубой акцент для заголовков */
-            --accent-danger: #f87171;     /* Светло-красный для опасных статусов */
+            --accent-blue: #38bdf8;       /* Мягкий голубой акцент */
+            --accent-danger: #f87171;     /* Светло-красный для опасностей */
             --accent-success: #4ade80;    /* Светло-зелёный для безопасных статусов */
         }
 
@@ -27,7 +27,7 @@
         }
 
         .main-wrapper {
-            max-width: 1000px;
+            max-width: 1050px;
             margin: 0 auto;
         }
 
@@ -43,17 +43,65 @@
             text-align: center;
             font-size: 16px;
             color: var(--secondary-color);
-            margin-bottom: 40px;
+            margin-bottom: 30px;
         }
 
-        /* Двухколоночный макет */
+        /* Навигация вкладок (Табы) */
+        .navigation-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 35px;
+        }
+
+        .tab-button {
+            background-color: var(--card-bg);
+            color: var(--secondary-color);
+            border: 1px solid var(--border-color);
+            padding: 12px 24px;
+            font-size: 15px;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .tab-button:hover {
+            color: var(--primary-color);
+            border-color: var(--accent-blue);
+        }
+
+        .tab-button.active {
+            background-color: #0284c7;
+            color: white;
+            border-color: #0284c7;
+            box-shadow: 0 4px 12px rgba(2, 132, 199, 0.3);
+        }
+
+        /* Контейнеры контента */
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Двухколоночная сетка для главного раздела */
         .content-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 1.1fr 0.9fr;
             gap: 30px;
         }
 
-        @media (max-width: 820px) {
+        /* Сетка для кулинарного раздела (более широкая, текстовая) */
+        .culinary-layout {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 25px;
+        }
+
+        @media (max-width: 850px) {
             .content-grid {
                 grid-template-columns: 1fr;
             }
@@ -61,7 +109,7 @@
 
         .card {
             background: var(--card-bg);
-            padding: 25px;
+            padding: 28px;
             border-radius: 12px;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
             height: fit-content;
@@ -69,29 +117,35 @@
         }
 
         h2 {
-            font-size: 20px;
+            font-size: 22px;
             border-bottom: 2px solid var(--border-color);
-            padding-bottom: 8px;
+            padding-bottom: 10px;
             margin-top: 0;
             color: var(--accent-blue);
         }
 
-        /* Справочный блок */
-        .info-block {
-            margin-bottom: 20px;
+        /* Элементы справочной абстракции */
+        .dynamic-section {
+            margin-bottom: 22px;
         }
-        .info-block h3 {
-            font-size: 16px;
-            margin-bottom: 5px;
+        .dynamic-section h3 {
+            font-size: 17px;
+            margin: 0 0 8px 0;
             color: var(--primary-color);
         }
-        .info-block p, .info-block li {
-            font-size: 14px;
+        .dynamic-section p {
+            font-size: 14.5px;
             color: #cbd5e1;
-            margin: 5px 0;
+            margin: 0 0 10px 0;
         }
-        ul {
+        .dynamic-section ul {
             padding-left: 20px;
+            margin: 8px 0;
+        }
+        .dynamic-section li {
+            font-size: 14.5px;
+            color: #cbd5e1;
+            margin-bottom: 6px;
         }
 
         /* Форма калькулятора */
@@ -109,7 +163,7 @@
 
         input[type="number"], select {
             width: 100%;
-            padding: 10px;
+            padding: 11px;
             background-color: var(--input-bg);
             color: var(--primary-color);
             border: 1px solid var(--border-color);
@@ -127,9 +181,9 @@
         .checkbox-group {
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 12px;
             background: var(--input-bg);
-            padding: 12px;
+            padding: 14px;
             border-radius: 8px;
             border: 1px solid var(--border-color);
         }
@@ -139,7 +193,7 @@
             align-items: flex-start;
             gap: 10px;
             cursor: pointer;
-            font-size: 13.5px;
+            font-size: 14px;
             color: #cbd5e1;
         }
 
@@ -148,7 +202,7 @@
             accent-color: var(--accent-blue);
         }
 
-        button {
+        .submit-btn {
             width: 100%;
             background-color: #0284c7;
             color: white;
@@ -162,7 +216,7 @@
             margin-top: 10px;
         }
 
-        button:hover {
+        .submit-btn:hover {
             background-color: #0369a1;
         }
 
@@ -171,7 +225,7 @@
             padding: 15px;
             border-radius: 8px;
             display: none;
-            font-size: 14px;
+            font-size: 14.5px;
         }
 
         .danger {
@@ -201,164 +255,221 @@
 
 <div class="main-wrapper">
 
-    <h1>Аспирин — друг или враг?</h1>
-    <div class="subtitle">Интерактивный справочник и калькулятор безопасности препарата</div>
+    <h1>Аспирин — аналитический разбор</h1>
+    <div class="subtitle">Интерактивный программный комплекс проверки безопасности соединения</div>
 
-    <div class="content-grid">
-        
-        <div class="card">
-            <h2>Справочная информация</h2>
+    <div class="navigation-tabs">
+        <button class="tab-button active" onclick="switchTab('medical')">Фармакология и риски</button>
+        <button class="tab-button" onclick="switchTab('culinary')">Технологии пищевых производств</button>
+    </div>
+
+    <div id="tab-medical" class="tab-content active">
+        <div class="content-grid">
             
-            <div class="info-block">
-                <h3>Химическая природа</h3>
-                <p>Аспирин (ацетилсалициловая кислота) — это organic соединение, относящееся к классу сложных эфиров и нестероидных противовоспалительных препаратов (НПВП). Обладает тремя основными эффектами: жаропонижающим, анальгезирующим (обезболивающим) и противовоспалительным.</p>
+            <div class="card">
+                <h2>Клиническое описание</h2>
+                <div id="medical-info-target"></div>
             </div>
 
-            <div class="info-block">
-                <h3>Двойственность действия</h3>
-                <p><strong>Польза:</strong> Эффективно снимает острый болевой синдром и снижает температуру в дозах от 500 мг. В малых дозах (75–100 мг) предотвращает склеивание тромбоцитов, снижая риск образования тромбов и защищая сердечно-сосудистую систему.</p>
-                <p><strong>Опасность:</strong> За счет своей кислотной природы и блокировки защитных факторов может вызывать эрозии и кровотечения в желудочно-кишечном тракте. Категорически противопоказан детям и подросткам из-за риска развития редкого, но смертельного синдрома Рея.</p>
-            </div>
+            <div class="card">
+                <h2>Калькулятор экспресс-диагностики</h2>
+                <form id="calcForm" onsubmit="calculateRisk(event)">
+                    
+                    <div class="form-group">
+                        <label for="age">Возраст пациента (полных лет):</label>
+                        <input type="number" id="age" required min="1" max="120" placeholder="Укажите возраст">
+                    </div>
 
-            <div class="info-block">
-                <h3>Аспирин в поварском и кондитерском деле</h3>
-                <p><strong>Историческая практика применения:</strong> Мощные фунгицидные (противогрибковые) и антисептические свойства ацетилсалициловой кислоты привели к тому, что в домашней кулинарии прошлого века её использовали не только для маринования овощей, но и в других технологических процессах:</p>
-                <ul>
-                    <li><strong>Кондитерское производство («Сырое» варенье):</strong> Аспирин измельчали и добавляли в перетертые с сахаром свежие ягоды (малину, клубнику, черную смородину), которые не подвергались варке. Препарат полностью блокировал размножение дрожжей и плесени. Это позволяло консервировать десерт холодным способом, сохраняя природный цвет и вкус ягод, но превращая его в опасную лекарственную смесь.</li>
-                    <li><strong>Молочное сырье (замедление скисания):</strong> В деревнях и при отсутствии холодильников таблетку аспирина бросали в кувшины с сырым молоком. Кислота подавляла жизнедеятельность молочнокислых бактерий, не давая им расщеплять лактозу до молочной кислоты, что временно спасало молоко от сворачивания в жару.</li>
-                    <li><strong>Обработка мяса:</strong> Раствором салицилатов натирали туши свежего мяса или птицы для предотвращения развития гнилостных бактерий на поверхности волокон, если его требовалось долго транспортировать.</li>
-                </ul>
-                <p><strong>Современный стандарт индустрии питания:</strong> Профессиональные повара и кондитеры категорически отказываются от лекарственных средств в технологических картах. Сегодня брожение в кондитерском деле предотвращается правильным расчетом сухих веществ (Brix), пастеризацией и безопасными сертифицированными консервантами (например, сорбиновой кислотой E200). Свежесть молока поддерживается ультрапастеризацией, а сохранность мяса — вакуумированием и строгим соблюдением температурной цепочки.</p>
-            </div>
-        </div>
+                    <div class="form-group">
+                        <label for="reason">Терапевтическая цель:</label>
+                        <select id="reason" required>
+                            <option value="" disabled selected>Выберите цель из списка...</option>
+                            <option value="pain">Анальгезирующее / жаропонижающее (высокие дозы)</option>
+                            <option value="cardio">Антиагрегантное / кардиологическое (малые дозы)</option>
+                        </select>
+                    </div>
 
-        <div class="card">
-            <h2>Калькулятор рисков</h2>
-            <form id="calcForm" onsubmit="calculateRisk(event)">
-                
-                <div class="form-group">
-                    <label for="age">Возраст (полных лет):</label>
-                    <input type="number" id="age" required min="1" max="120" placeholder="Укажите возраст">
-                </div>
+                    <div class="form-group">
+                        <label>Анамнез и повседневные факторы риска:</label>
+                        <div class="checkbox-group">
+                            <label class="checkbox-item">
+                                <input type="checkbox" id="alcohol"> Систематическое или недавнее употребление алкоголя
+                            </label>
+                            <label class="checkbox-item">
+                                <input type="checkbox" id="gastro"> Хронические патологии ЖКТ (гастрит, язва, эрозии)
+                            </label>
+                            <label class="checkbox-item">
+                                <input type="checkbox" id="nsaids"> Параллельный прием других обезболивающих (Ибупрофен, Диклофенак и др.)
+                            </label>
+                            <label class="checkbox-item">
+                                <input type="checkbox" id="asthma"> Бронхиальная астма или аллергия на НПВП
+                            </label>
+                        </div>
+                    </div>
 
-                <div class="form-group">
-                    <label for="reason">Цель предполагаемого приема:</label>
-                    <select id="reason" required>
-                        <option value="" disabled selected>Выберите цель...</option>
-                        <option value="pain">Купирование боли или высокой температуры</option>
-                        <option value="cardio">Профилактика сердечно-сосудистых заболеваний</option>
-                    </select>
-                </div>
+                    <button type="submit" class="submit-btn">Выполнить скрининг</button>
+                </form>
 
-                <div class="form-group">
-                    <label>Факторы риска и особенности здоровья:</label>
-                    <div class="checkbox-group">
-                        <label class="checkbox-item">
-                            <input type="checkbox" id="ulcer"> Заболевания ЖКТ (язва, острый гастрит, кровотечения в анамнезе)
-                        </label>
-                        <label class="checkbox-item">
-                            <input type="checkbox" id="asthma"> Бронхиальная астма
-                        </label>
-                        <label class="checkbox-item">
-                            <input type="checkbox" id="polyps"> Разрастание полипов в носу и околоносовых пазухах (полипозный риносинусит)
-                        </label>
-                        <label class="checkbox-item">
-                            <input type="checkbox" id="pregnancy"> Беременность (особенно в III триместре)
-                        </label>
-                        <label class="checkbox-item">
-                            <input type="checkbox" id="allergy"> Гиперчувствительность к салицилатам или другим НПВП
-                        </label>
-                        <label class="checkbox-item">
-                            <input type="checkbox" id="alcohol"> Регулярное употребление алкоголя или прием антикоагулянтов
-                        </label>
-                        <label class="checkbox-item">
-                            <input type="checkbox" id="culinaryUse"> Регулярно употребляю домашние заготовки (соленья, "сырое" варенье), содержащие аспирин
-                        </label>
+                <div id="result" class="result-box">
+                    <div id="resultText"></div>
+                    <div class="disclaimer">
+                        ⚠️ Внимание: Расчет носит справочно-ознакомительный характер. Назначения лечащего врача имеют безусловный приоритет.
                     </div>
                 </div>
+            </div>
 
-                <button type="submit">Оценить безопасность приема</button>
-            </form>
+        </div>
+    </div>
 
-            <div id="result" class="result-box">
-                <div id="resultText"></div>
-                <div class="disclaimer">
-                    ⚠️ Важное напоминание: Данный алгоритм выполняет сугубо ознакомительный расчет. Индивидуальные предписания вашего лечащего врача всегда важнее и приоритетнее заключений любых автоматизированных систем!
-                </div>
+    <div id="tab-culinary" class="tab-content">
+        <div class="culinary-layout">
+            <div class="card">
+                <h2>Исторические и современные аспекты применения в пищевой индустрии</h2>
+                <div id="culinary-info-target"></div>
             </div>
         </div>
-
     </div>
+
 </div>
 
 <script>
+// --- АБСТРАКЦИЯ ДАННЫХ (ИНФОРМАЦИОННАЯ МОДЕЛЬ САЙТА) ---
+const INFO_STORAGE = {
+    medical: [
+        {
+            title: "Химическая природа",
+            paragraphs: [
+                "Ацетилсалициловая кислота (аспирин) — сложный эфир салициловой кислоты, представляющий класс нестероидных противовоспалительных препаратов (НПВП). Молекула оказывает системное ингибирующее воздействие на ферменты циклооксигеназы (ЦОГ-1 и ЦОГ-2), снижая синтез медиаторов боли и воспаления — простагландинов."
+            ]
+        },
+        {
+            title: "Двойственность фармакологического ответа",
+            paragraphs: [
+                "<strong>Терапевтическая польза:</strong> В макродозах (от 500 мг) препарат эффективно блокирует передачу болевых импульсов и снижает детерминированную простагландинами лихорадку. В микродозах (75-100 мг) выступает дезагрегантом: необратимо подавляет синтез тромбоксана А2 в тромбоцитах, предотвращая агрегацию клеток и снижая риск сосудистых катастроф.",
+                "<strong>Патологический риск:</strong> Системное подавление изофермента ЦОГ-1 лишает слизистую оболочку желудка естественной протекции, форсируя риски образования острых язв. Полностью противопоказан в педиатрии из-за триггерного участия в развитии синдрома Рея."
+            ]
+        }
+    ],
+    culinary: [
+        {
+            title: "Феномен кулинарной консервации (ХХ век)",
+            paragraphs: [
+                "В практике домашней заготовки советского периода аспирин получил некорректный статус доступного консерванта. При термической обработке вещество претерпевает гидролиз, распадаясь на уксусную и салициловую кислоты.",
+                "Салициловая кислота — мощный антисептик с выраженными фунгицидными свойствами. Она полностью угнетает клеточное дыхание микроорганизмов, что позволяло сохранять овощные рассолы прозрачными, предотвращая срыв крышек («взрыв банок»)."
+            ]
+        },
+        {
+            title: "Применение в кондитерском деле и заготовке ягод",
+            paragraphs: [
+                "В технологиях переработки плодово-ягодного сырья измельченный аспирин вводился в так называемое «сырое варенье» — протертые ягоды (малина, смородина), не подвергавшиеся пастеризации или варке.",
+                "Ацетилсалициловая кислота химически блокировала жизнедеятельность диких дрожжей и плесневых грибов. Это сохраняло органолептические свойства и естественный пигмент сырых ягод, но превращало кулинарный продукт в скрытую лекарственную форму с неконтролируемой дозировкой."
+            ]
+        },
+        {
+            title: "Молочная и мясная промышленность прошлого",
+            paragraphs: [
+                "До повсеместного внедрения холодильного оборудования салицилаты использовались для искусственного продления сроков хранения скоропортящегося сырья:",
+                "<strong>Стабилизация молока:</strong> Добавление таблетки в сырое молоко подавляло развитие штаммов Lactobacillus, временно блокируя расщепление лактозы и предотвращая коагуляцию белка (скисание) в неблагоприятных температурных условиях.",
+                "<strong>Санация мясных туш:</strong> Концентрированным раствором кислоты обрабатывали поверхности туш птицы и скота, формируя антибактериальный барьер, предотвращающий поверхностное гниение при транспортировке."
+            ]
+        },
+        {
+            title: "Современные стандарты и запреты ВОЗ",
+            paragraphs: [
+                "Использование лекарственных средств в технологических процессах пищевых производств категорически запрещено международными стандартами (Codex Alimentarius) и СанПиН. Аспирин не зарегистрирован в качестве пищевой добавки (не имеет Е-индекса).",
+                "При систематическом поступлении с пищей салицилаты аккумулируются, вызывая выраженную нефротоксичность (поражение почечных канальцев) и провоцируя скрытые кровотечения ЖКТ. В современной ресторанной и кондитерской индустрии консервация достигается исключительно физическими методами (ультрапастеризация, сушка, вакуумирование, шоковая заморозка) либо регламентированными пищевыми кислотами (лимонная E330, сорбиновая E200, уксусная E260)."
+            ]
+        }
+    ]
+};
+
+// --- ФУНКЦИЯ ДИНАМИЧЕСКОГО РЕНДЕРИНГА КОНТЕНТА (ИНТЕГРАЦИЯ АБСТРАКЦИИ) ---
+function renderInfoBlocks() {
+    const medicalTarget = document.getElementById('medical-info-target');
+    const culinaryTarget = document.getElementById('culinary-info-target');
+
+    // Рендер медицинской вкладки
+    medicalTarget.innerHTML = INFO_STORAGE.medical.map(block => `
+        <div class="info-block dynamic-section">
+            <h3>${block.title}</h3>
+            ${block.paragraphs.map(p => `<p>${p}</p>`).join('')}
+        </div>
+    `).join('');
+
+    // Рендер кулинарной вкладки
+    culinaryTarget.innerHTML = INFO_STORAGE.culinary.map(block => `
+        <div class="info-block dynamic-section">
+            <h3>${block.title}</h3>
+            ${block.paragraphs.map(p => `<p>${p}</p>`).join('')}
+        </div>
+    `).join('');
+}
+
+// --- ЛОГИКА ПЕРЕКЛЮЧЕНИЯ ВКЛАДОК ---
+function switchTab(tabName) {
+    // Деактивация всех табов и кнопок
+    document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.tab-button').forEach(el => el.classList.remove('active'));
+
+    // Активация целевых элементов
+    document.getElementById(`tab-${tabName}`).classList.add('active');
+    event.currentTarget.classList.add('active');
+}
+
+// --- КЛИНИЧЕСКИЙ АЛГОРИТМ КАЛЬКУЛЯТОРА ---
 function calculateRisk(event) {
     event.preventDefault();
 
     const age = parseInt(document.getElementById('age').value);
     const reason = document.getElementById('reason').value;
     
-    const hasUlcer = document.getElementById('ulcer').checked;
-    const hasAsthma = document.getElementById('asthma').checked;
-    const hasPolyps = document.getElementById('polyps').checked;
-    const hasPregnancy = document.getElementById('pregnancy').checked;
-    const hasAllergy = document.getElementById('allergy').checked;
     const hasAlcohol = document.getElementById('alcohol').checked;
-    const hasCulinaryUse = document.getElementById('culinaryUse').checked;
+    const hasGastro = document.getElementById('gastro').checked;
+    const hasNsaids = document.getElementById('nsaids').checked;
+    const hasAsthma = document.getElementById('asthma').checked;
 
-    let dangerCoefficient = 0;
-    let isRefused = false;
-    let refuseReason = "";
-    let culinaryWarning = "";
+    let dangerScore = 0;
+    let isContraindicated = false;
+    let mainReason = "";
 
-    // Оценка возраста (Главный критерий безопасности)
+    // Критический возрастной порог
     if (age < 18) {
-        isRefused = true;
-        refuseReason = "Прием препарата категорически запрещен лицам младше 18 лет из-за высокой опасности развития жизнеугрожающего синдрома Рея (энцефалопатия и поражение печени).";
-    } else if (age >= 60) {
-        dangerCoefficient += 2; // Возрастной риск кровотечений
+        isContraindicated = true;
+        mainReason = "Возраст пациента младше 18 лет. Применение салицилатов строго запрещено из-за риска развития фатального синдрома Рея.";
     }
 
-    // Абсолютные противопоказания
-    if (hasUlcer || hasAsthma || hasPolyps || hasPregnancy || hasAllergy) {
-        isRefused = true;
-        if (!refuseReason) {
-            refuseReason = "Выявлены критические медицинские противопоказания (высокий риск повреждения слизистой ЖКТ, провокации астматического приступа, обострения аспириновой триады или токсического действия).";
-        }
+    // Абсолютное медицинское противопоказание
+    if (hasAsthma) {
+        isContraindicated = true;
+        mainReason = "Выявлена гиперчувствительность / аспириновая астма. Риск развития острого бронхоспазма и анафилаксии.";
     }
 
-    // Мягкие факторы риска
-    if (hasAlcohol) {
-        dangerCoefficient += 3;
-    }
-
-    // Обработка кулинарного фактора риска
-    if (hasCulinaryUse) {
-        dangerCoefficient += 2; 
-        culinaryWarning = "<br><br><strong>⚠️ Кулинарно-кондитерский риск:</strong> Вы отметили регулярное употребление продуктов (заготовок, сырых ягодных пюре), законсервированных аспирином. Систематическое попадание салицилатов с пищей создает постоянную токсическую нагрузку на почечные фильтры и разрушает защитный барьер желудка. Настоятельно рекомендуется заменить такие продукты на десерты и заготовки, приготовленные с использованием безопасных кондитерских методов (пастеризация, сорбиновая или лимонная кислота).";
-    }
+    // Подсчет баллов для бытовых и частых рисков
+    if (hasAlcohol) dangerScore += 3; // Алкоголь усиливает деструкцию слизистой и разжижение крови
+    if (hasGastro) dangerScore += 3;  // Анамнез по ЖКТ — прямая угроза кровотечений
+    if (hasNsaids) dangerScore += 2;  // Перекрестный прием НПВП кратно умножает токсичность
 
     const resultDiv = document.getElementById('result');
     const resultText = document.getElementById('resultText');
     resultDiv.style.display = "block";
 
-    if (isRefused || dangerCoefficient >= 5) {
+    if (isContraindicated || dangerScore >= 5) {
         resultDiv.className = "result-box danger";
-        resultText.innerHTML = `<strong>ОПАСНО ❌</strong><br><br>${refuseReason || "Суммарный коэффициент опасности слишком высок для безопасного самостоятельного приема."}${culinaryWarning}`;
+        let finalMessage = mainReason ? mainReason : "Превышен допустимый порог совмещенных факторов риска (алкоголь, уязвимость ЖКТ или лекарственное взаимодействие). Самостоятельный прием опасен.";
+        resultText.innerHTML = `<strong>ПРИЕМ КАТЕГОРИЧЕСКИ ОПАСЕН ❌</strong><br><br>${finalMessage}`;
     } else {
         resultDiv.className = "result-box success";
-        let dosage = "";
-        
-        if (reason === 'cardio') {
-            dosage = "75–100 мг 1 раз в сутки (кардиологическая доза для разжижения крови).";
-        } else {
-            dosage = "500–1000 мг однократно (для снятия боли/жара. Максимум 3 г в сутки, интервал не менее 4 часов).";
-        }
+        let dosageInfo = (reason === 'cardio') 
+            ? "75–100 мг один раз в сутки после еды (антиагрегантная доза)." 
+            : "500–1000 мг однократно при боли или лихорадке (интервал — не менее 4-6 часов, макс. 3 г/сутки).";
 
-        let warningPrefix = dangerCoefficient > 0 ? "⚠️ Внимание: зафиксированы умеренные факторы риска. " : "";
-        resultText.innerHTML = `<strong>БЕЗОПАСНО ✅</strong><br><br>${warningPrefix}Ориентировочная стандартная дозировка (при отсутствии иных индивидуальных ограничений): <strong>${dosage}</strong> Превышение таковой может привести к пагубным последствиям для здоровья.${culinaryWarning}`;
+        let warning = dangerScore > 0 ? "⚠️ <strong>Внимание:</strong> Зафиксированы умеренные факторы риска. Рекомендуется сопутствующий прием гастропротекторов (например, ингибиторов протонной помпы) по согласованию с врачом.<br><br>" : "";
+        resultText.innerHTML = `<strong>ДОПУСТИМО ПРИ ОТСУТСТВИИ ИНЫХ ОГРАНИЧЕНИЙ ✅</strong><br><br>${warning}Ориентировочная стандартная дозировка: <strong>${dosageInfo}</strong>`;
     }
 }
+
+// Инициализация данных при загрузке страницы
+document.addEventListener("DOMContentLoaded", renderInfoBlocks);
 </script>
 
 </body>
